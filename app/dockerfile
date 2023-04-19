@@ -1,10 +1,20 @@
 FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
 
+#create ctf user
 RUN useradd -ms /bin/bash ctf
+
+#add files
 ADD acarsdec /home/ctf/acarsdec
+ADD examples /home/ctf/examples
+
+#install dependencies
 RUN apt-get update -y
-RUN apt-get install make gcc libsndfile-dev libasound-dev librtlsdr-dev -y
+RUN apt-get install make cmake gcc libsndfile-dev libasound-dev librtlsdr-dev -y
+
+#compile acarsdec
 RUN make -C /home/ctf/acarsdec
+
+#switch to ctf user account
 USER ctf
 WORKDIR /home/ctf
