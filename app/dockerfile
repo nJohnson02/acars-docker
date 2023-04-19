@@ -1,0 +1,10 @@
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN useradd -ms /bin/bash ctf
+ADD acarsdec /home/ctf/acarsdec
+RUN apt-get update -y
+RUN apt-get install make gcc libsndfile-dev libasound-dev librtlsdr-dev -y
+RUN make -C /home/ctf/acarsdec
+USER ctf
+WORKDIR /home/ctf
